@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Botox Consultation - [Med Spa Name]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 40px;
+            margin-top: -40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .form-section h2 {
+            margin-bottom: 10px;
+            color: #667eea;
+            font-size: 1.8rem;
+        }
+        
+        .form-section p {
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .benefits {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .benefits h3 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .benefit-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>Look Younger in 15 Minutes</h1>
+        <p>Book Your Free Botox Consultation Today - Limited Spots Available</p>
+    </div>
+    
+    <div class="container">
+        <div class="form-section">
+            <h2>Claim Your Free Consultation</h2>
+            <p>No obligation. Expert advice. See results before you commit.</p>
+            
+            <div id="successMessage" class="success-message">
+                <strong>Success!</strong> We've received your request. You'll hear from us within 24 hours.
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                <strong>Error!</strong> Something went wrong. Please try again or call us directly.
+            </div>
+            
+            <form id="leadForm">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="treatment">Interested In *</label>
+                    <select id="treatment" name="treatment" required>
+                        <option value="">Select a treatment</option>
+                        <option value="botox">Botox</option>
+                        <option value="fillers">Dermal Fillers</option>
+                        <option value="laser">Laser Treatment</option>
+                        <option value="facials">Medical Facials</option>
+                        <option value="other">Other/Not Sure</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="availability">Best Time to Reach You</label>
+                    <select id="availability" name="availability">
+                        <option value="morning">Morning (9am-12pm)</option>
+                        <option value="afternoon">Afternoon (12pm-5pm)</option>
+                        <option value="evening">Evening (5pm-7pm)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Questions or Concerns (Optional)</label>
+                    <textarea id="message" name="message" placeholder="Tell us what you'd like to achieve..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">Book My Free Consultation</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="benefits">
+        <h3>Why Choose Us?</h3>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h4>Expert Providers</h4>
+                <p>Board-certified professionals with years of experience</p>
+            </div>
+            <div class="benefit-card">
+                <h4>Natural Results</h4>
+                <p>Subtle enhancements that make you look refreshed, not overdone</p>
+            </div>
+            <div class="benefit-card">
+                <h4>Safe & Clean</h4>
+                <p>Medical-grade facility with the highest safety standards</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.getElementById('leadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMsg = document.getElementById('successMessage');
+        const errorMsg = document.getElementById('errorMessage');
+        
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Hide previous messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                treatment: document.getElementById('treatment').value,
+                availability: document.getElementById('availability').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // This is where you'll connect to your n8n webhook
+                // Replace YOUR_N8N_WEBHOOK_URL with your actual webhook URL
+                const response = await fetch('YOUR_N8N_WEBHOOK_URL', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (response.ok) {
+                    successMsg.style.display = 'block';
+                    form.reset();
+                    
+                    // Scroll to success message
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMsg.style.display = 'block';
+                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Book My Free Consultation';
+            }
+        });
+    </script>
+</body>
+</html>
