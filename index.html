@@ -227,9 +227,9 @@
                 <div class="form-group">
                     <label for="availability">Best Time to Reach You</label>
                     <select id="availability" name="availability">
-                        <option value="Morning">Morning (9am-12pm)</option>
-                        <option value="Afternoon">Afternoon (12pm-5pm)</option>
-                        <option value="Evening">Evening (5pm-7pm)</option>
+                        <option value="morning">Morning (9am-12pm)</option>
+                        <option value="afternoon">Afternoon (12pm-5pm)</option>
+                        <option value="evening">Evening (5pm-7pm)</option>
                     </select>
                 </div>
                 
@@ -290,8 +290,7 @@
             };
             
             try {
-                // This is where you'll connect to your n8n webhook
-                // Replace YOUR_N8N_WEBHOOK_URL with your actual webhook URL
+                // ⭐ YOUR N8N WEBHOOK URL - ALREADY CONNECTED! ⭐
                 const response = await fetch('https://medspafgfgfgg.app.n8n.cloud/webhook/medspa-lead', {
                     method: 'POST',
                     headers: {
@@ -300,17 +299,32 @@
                     body: JSON.stringify(formData)
                 });
                 
-                if (response.ok) {
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
                     successMsg.style.display = 'block';
                     form.reset();
                     
                     // Scroll to success message
                     successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Optional: Log channel status for debugging
+                    if (result.channelsStatus) {
+                        console.log('Notification Status:', result.channelsStatus);
+                    }
+                    
+                    // Show warning if some notifications failed
+                    if (result.warnings) {
+                        console.warn(result.warnings);
+                    }
                 } else {
-                    throw new Error('Submission failed');
+                    // Show error from server
+                    throw new Error(result.error || 'Submission failed');
                 }
             } catch (error) {
                 console.error('Error:', error);
+                errorMsg.textContent = error.message || 'Something went wrong. Please try again or call us directly.';
                 errorMsg.style.display = 'block';
                 errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } finally {
@@ -320,7 +334,4 @@
         });
     </script>
 </body>
-
 </html>
-
-
