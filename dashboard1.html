@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Med Spa Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        /* Simple icons using CSS instead of Lucide */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 min-h-screen">
+    
+    <!-- Header -->
+    <div class="bg-white shadow-lg border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                        Med Spa Management
+                    </h1>
+                    <p class="text-gray-600 mt-1">Complete Lead Tracking System</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <select id="timeRange" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <option value="7">Last 7 Days</option>
+                        <option value="30">Last 30 Days</option>
+                        <option value="90">Last 90 Days</option>
+                    </select>
+                    <button onclick="refreshData()" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white shadow border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex gap-8">
+                <button onclick="showTab('dashboard')" id="tab-dashboard" class="flex items-center gap-2 px-4 py-4 border-b-2 border-purple-600 text-purple-600">
+                    📊 Dashboard
+                </button>
+                <button onclick="showTab('leads')" id="tab-leads" class="flex items-center gap-2 px-4 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900">
+                    👥 Leads
+                </button>
+                <button onclick="showTab('activity')" id="tab-activity" class="flex items-center gap-2 px-4 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900">
+                    📈 Activity
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        
+        <!-- Dashboard View -->
+        <div id="dashboard-view">
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4" style="border-left-color: #667eea">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium mb-1">Total Leads</p>
+                            <h3 class="text-3xl font-bold mb-1" style="color: #667eea" id="stat-total">0</h3>
+                            <p class="text-sm text-gray-600">All time</p>
+                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #667eea15">
+                            👥
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4" style="border-left-color: #f59e0b">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium mb-1">New Leads</p>
+                            <h3 class="text-3xl font-bold mb-1" style="color: #f59e0b" id="stat-new">0</h3>
+                            <p class="text-sm text-gray-600">Awaiting contact</p>
+                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #f59e0b15">
+                            ⏰
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4" style="border-left-color: #10b981">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium mb-1">Booked</p>
+                            <h3 class="text-3xl font-bold mb-1" style="color: #10b981" id="stat-booked">0</h3>
+                            <p class="text-sm text-gray-600">Consultations</p>
+                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #10b98115">
+                            ✅
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4" style="border-left-color: #8b5cf6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex-1">
+                            <p class="text-gray-500 text-sm font-medium mb-1">Conversion</p>
+                            <h3 class="text-3xl font-bold mb-1" style="color: #8b5cf6" id="stat-conversion">0%</h3>
+                            <p class="text-sm text-gray-600" id="stat-response">Avg response: 0h</p>
+                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #8b5cf615">
+                            📈
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Leads</h3>
+                    <div id="recent-leads-list" class="space-y-3">
+                        <!-- Recent leads will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Treatment Breakdown</h3>
+                    <div id="treatment-breakdown" class="space-y-2">
+                        <!-- Treatment stats will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Pipeline -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">Lead Status Pipeline</h3>
+                <div id="status-pipeline" class="grid grid-cols-5 gap-4">
+                    <!-- Status counts will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Leads View -->
+        <div id="leads-view" class="hidden">
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="🔍 Search by name, email, or phone..."
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
+                        oninput="filterLeads()"
+                    />
+                    
+                    <select id="status-filter" onchange="filterLeads()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+                        <option value="all">All Statuses</option>
+                        <option value="New">New</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Qualified">Qualified</option>
+                        <option value="Booked">Booked</option>
+                        <option value="Lost">Lost</option>
+                    </select>
+                    
+                    <button onclick="exportData()" class="flex items-center justify-center gap-2 px-4 py-2 gradient-bg text-white rounded-lg hover:shadow-lg transition-all">
+                        💾 Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Leads Table -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="gradient-bg text-white">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Name</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Contact</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Treatment</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Status</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Availability</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leads-table-body" class="divide-y divide-gray-200">
+                            <!-- Leads will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity View -->
+        <div id="activity-view" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-6">Recent Activity</h3>
+                <div id="activity-list" class="space-y-4">
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🔔</div>
+                        <p class="text-gray-500">No recent activity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================
+        // 🔐 ADD YOUR AIRTABLE API KEY HERE
+        // ============================================
+        const AIRTABLE_API_KEY = 'patk9OGp8mQspu3xJ.81a1ad175ccbbf9e24d5e4f795dfabef47184123712e34e46d7714017c08c2d9';
+        const AIRTABLE_BASE_ID = 'appYxaLzOMQSrgHQu';
+        const AIRTABLE_TABLE_ID = 'tblR4uvSyfcezdh9q';
+        // ============================================
+
+        let allLeads = [];
+        let filteredLeads = [];
+
+        // Load real data from Airtable
+        async function loadRealData() {
+            try {
+                const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`, {
+                    headers: {
+                        'Authorization': `Bearer ${AIRTABLE_API_KEY}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch from Airtable');
+                }
+                
+                const data = await response.json();
+                
+                allLeads = data.records.map(record => ({
+                    id: record.id,
+                    name: record.fields.Name || 'Unknown',
+                    email: record.fields.Email || 'No email',
+                    phone: record.fields.Phone || 'No phone',
+                    treatment: record.fields.Treatment || 'Other',
+                    status: record.fields.Status ? record.fields.Status.trim() : 'New',
+                    availability: record.fields.Availability || 'Not specified',
+                    message: record.fields.Message || 'No message',
+                    source: record.fields['Lead Source'] || 'Landing page',
+                    created: record.fields.Created || record.createdTime
+                }));
+                
+                filteredLeads = [...allLeads];
+                console.log(`✅ Loaded ${allLeads.length} leads from Airtable`);
+                return true;
+            } catch (error) {
+                console.error('❌ Error loading from Airtable:', error);
+                return false;
+            }
+        }
+
+        // Calculate and update stats
+        function updateStats() {
+            const statusCounts = allLeads.reduce((acc, lead) => {
+                acc[lead.status] = (acc[lead.status] || 0) + 1;
+                return acc;
+            }, {});
+
+            const total = allLeads.length;
+            const newLeads = statusCounts['New'] || 0;
+            const booked = statusCounts['Booked'] || 0;
+            const conversionRate = total > 0 ? ((booked / total) * 100).toFixed(1) : 0;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-new').textContent = newLeads;
+            document.getElementById('stat-booked').textContent = booked;
+            document.getElementById('stat-conversion').textContent = `${conversionRate}%`;
+
+            // Update recent leads
+            const recentLeadsList = document.getElementById('recent-leads-list');
+            const recentLeads = allLeads.slice(-5).reverse();
+            recentLeadsList.innerHTML = recentLeads.map(lead => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div>
+                        <p class="font-medium text-gray-900">${lead.name}</p>
+                        <p class="text-sm text-gray-600">${lead.treatment}</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(lead.status)}">
+                        ${lead.status}
+                    </span>
+                </div>
+            `).join('');
+
+            // Update treatment breakdown
+            const treatmentCounts = allLeads.reduce((acc, lead) => {
+                acc[lead.treatment] = (acc[lead.treatment] || 0) + 1;
+                return acc;
+            }, {});
+            
+            const treatmentBreakdown = document.getElementById('treatment-breakdown');
+            treatmentBreakdown.innerHTML = Object.entries(treatmentCounts).map(([treatment, count]) => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <span class="text-gray-700">${treatment}</span>
+                    <span class="font-bold text-purple-600">${count}</span>
+                </div>
+            `).join('');
+
+            // Update status pipeline
+            const statusPipeline = document.getElementById('status-pipeline');
+            const statuses = ['New', 'Contacted', 'Qualified', 'Booked', 'Lost'];
+            statusPipeline.innerHTML = statuses.map(status => `
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl font-bold ${getStatusTextColor(status)} mb-1">
+                        ${statusCounts[status] || 0}
+                    </div>
+                    <div class="text-sm text-gray-600">${status}</div>
+                </div>
+            `).join('');
+        }
+
+        // Get status color classes
+        function getStatusColor(status) {
+            const colors = {
+                'New': 'bg-blue-100 text-blue-800',
+                'Contacted': 'bg-yellow-100 text-yellow-800',
+                'Qualified': 'bg-purple-100 text-purple-800',
+                'Booked': 'bg-green-100 text-green-800',
+                'Lost': 'bg-red-100 text-red-800'
+            };
+            return colors[status] || 'bg-gray-100 text-gray-800';
+        }
+
+        function getStatusTextColor(status) {
+            const colors = {
+                'New': 'text-blue-600',
+                'Contacted': 'text-yellow-600',
+                'Qualified': 'text-purple-600',
+                'Booked': 'text-green-600',
+                'Lost': 'text-red-600'
+            };
+            return colors[status] || 'text-gray-600';
+        }
+
+        // Update leads table
+        function updateLeadsTable() {
+            const tbody = document.getElementById('leads-table-body');
+            tbody.innerHTML = filteredLeads.map(lead => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4">
+                        <div class="font-medium text-gray-900">${lead.name}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-700">${lead.email}</div>
+                        <div class="text-sm text-gray-500">${lead.phone}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${lead.treatment}</td>
+                    <td class="px-6 py-4">
+                        <select onchange="updateLeadStatus('${lead.id}', this.value)" class="px-3 py-1 rounded-full text-xs font-medium border-0 cursor-pointer ${getStatusColor(lead.status)}">
+                            <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
+                            <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                            <option value="Qualified" ${lead.status === 'Qualified' ? 'selected' : ''}>Qualified</option>
+                            <option value="Booked" ${lead.status === 'Booked' ? 'selected' : ''}>Booked</option>
+                            <option value="Lost" ${lead.status === 'Lost' ? 'selected' : ''}>Lost</option>
+                        </select>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-700">${lead.availability}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">${new Date(lead.created).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter leads
+        function filterLeads() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value;
+
+            filteredLeads = allLeads.filter(lead => {
+                const matchesSearch = !searchTerm || 
+                    lead.name.toLowerCase().includes(searchTerm) ||
+                    lead.email.toLowerCase().includes(searchTerm) ||
+                    lead.phone.includes(searchTerm);
+                
+                const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
+
+                return matchesSearch && matchesStatus;
+            });
+
+            updateLeadsTable();
+        }
+
+        // Update lead status (and save to Airtable)
+        async function updateLeadStatus(leadId, newStatus) {
+            const lead = allLeads.find(l => l.id === leadId);
+            if (!lead) return;
+            
+            const selectElement = event.target;
+            const originalStatus = lead.status;
+            selectElement.disabled = true;
+            selectElement.style.opacity = '0.5';
+            
+            try {
+                const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}/${leadId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fields: {
+                            Status: newStatus
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update Airtable');
+                }
+                
+                lead.status = newStatus;
+                updateStats();
+                filterLeads();
+                
+                showNotification(`✅ ${lead.name} updated to ${newStatus}`, 'success');
+                console.log(`✅ Updated lead ${leadId} to ${newStatus} in Airtable`);
+                
+            } catch (error) {
+                console.error('❌ Error updating Airtable:', error);
+                lead.status = originalStatus;
+                selectElement.value = originalStatus;
+                showNotification(`❌ Failed to update. Please try again.`, 'error');
+            } finally {
+                selectElement.disabled = false;
+                selectElement.style.opacity = '1';
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500 text-white' :
+                type === 'error' ? 'bg-red-500 text-white' :
+                'bg-blue-500 text-white'
+            }`;
+            notification.style.animation = 'slideIn 0.3s ease-out';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Export data
+        function exportData() {
+            const csv = [
+                ['Name', 'Email', 'Phone', 'Treatment', 'Status', 'Availability', 'Created'],
+                ...allLeads.map(lead => [
+                    lead.name,
+                    lead.email,
+                    lead.phone,
+                    lead.treatment,
+                    lead.status,
+                    lead.availability,
+                    new Date(lead.created).toLocaleDateString()
+                ])
+            ].map(row => row.join(',')).join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `medspa-leads-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            showNotification('✅ Data exported successfully!', 'success');
+        }
+
+        // Show tab
+        function showTab(tabName) {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('leads-view').classList.add('hidden');
+            document.getElementById('activity-view').classList.add('hidden');
+
+            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+                tab.classList.remove('border-purple-600', 'text-purple-600');
+                tab.classList.add('border-transparent', 'text-gray-600');
+            });
+
+            document.getElementById(`${tabName}-view`).classList.remove('hidden');
+
+            const activeTab = document.getElementById(`tab-${tabName}`);
+            activeTab.classList.remove('border-transparent', 'text-gray-600');
+            activeTab.classList.add('border-purple-600', 'text-purple-600');
+        }
+
+        // Refresh data
+        async function refreshData() {
+            const button = event.target.closest('button');
+            button.disabled = true;
+            button.textContent = '⏳ Loading...';
+            
+            const success = await loadRealData();
+            
+            if (success) {
+                updateStats();
+                filterLeads();
+                showNotification(`✅ Loaded ${allLeads.length} leads!`, 'success');
+            } else {
+                showNotification('❌ Failed to load data from Airtable', 'error');
+            }
+            
+            button.disabled = false;
+            button.textContent = '↻ Refresh';
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Loading Med Spa Dashboard...');
+            
+            const success = await loadRealData();
+            
+            if (success) {
+                updateStats();
+                updateLeadsTable();
+                console.log('✅ Dashboard loaded successfully!');
+            } else {
+                console.log('❌ Failed to load from Airtable. Check API key.');
+                showNotification('❌ Could not connect to Airtable. Check console.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
