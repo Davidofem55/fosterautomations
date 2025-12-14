@@ -13,31 +13,12 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-        /* Simple icons using CSS instead of Lucide */
-        .icon {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            vertical-align: middle;
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
         }
     </style>
 </head>
@@ -98,9 +79,7 @@
                             <h3 class="text-3xl font-bold mb-1" style="color: #667eea" id="stat-total">0</h3>
                             <p class="text-sm text-gray-600">All time</p>
                         </div>
-                        <div class="p-4 rounded-full text-4xl" style="background-color: #667eea15">
-                            👥
-                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #667eea15">👥</div>
                     </div>
                 </div>
 
@@ -111,9 +90,7 @@
                             <h3 class="text-3xl font-bold mb-1" style="color: #f59e0b" id="stat-new">0</h3>
                             <p class="text-sm text-gray-600">Awaiting contact</p>
                         </div>
-                        <div class="p-4 rounded-full text-4xl" style="background-color: #f59e0b15">
-                            ⏰
-                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #f59e0b15">⏰</div>
                     </div>
                 </div>
 
@@ -124,9 +101,7 @@
                             <h3 class="text-3xl font-bold mb-1" style="color: #10b981" id="stat-booked">0</h3>
                             <p class="text-sm text-gray-600">Consultations</p>
                         </div>
-                        <div class="p-4 rounded-full text-4xl" style="background-color: #10b98115">
-                            ✅
-                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #10b98115">✅</div>
                     </div>
                 </div>
 
@@ -137,9 +112,7 @@
                             <h3 class="text-3xl font-bold mb-1" style="color: #8b5cf6" id="stat-conversion">0%</h3>
                             <p class="text-sm text-gray-600" id="stat-response">Avg response: 0h</p>
                         </div>
-                        <div class="p-4 rounded-full text-4xl" style="background-color: #8b5cf615">
-                            📈
-                        </div>
+                        <div class="p-4 rounded-full text-4xl" style="background-color: #8b5cf615">📈</div>
                     </div>
                 </div>
             </div>
@@ -148,25 +121,19 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-800 mb-4">Recent Leads</h3>
-                    <div id="recent-leads-list" class="space-y-3">
-                        <!-- Recent leads will be inserted here -->
-                    </div>
+                    <div id="recent-leads-list" class="space-y-3"></div>
                 </div>
 
                 <div class="bg-white rounded-xl shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-800 mb-4">Treatment Breakdown</h3>
-                    <div id="treatment-breakdown" class="space-y-2">
-                        <!-- Treatment stats will be inserted here -->
-                    </div>
+                    <div id="treatment-breakdown" class="space-y-2"></div>
                 </div>
             </div>
 
             <!-- Status Pipeline -->
             <div class="bg-white rounded-xl shadow-lg p-6">
                 <h3 class="text-lg font-bold text-gray-800 mb-4">Lead Status Pipeline</h3>
-                <div id="status-pipeline" class="grid grid-cols-5 gap-4">
-                    <!-- Status counts will be inserted here -->
-                </div>
+                <div id="status-pipeline" class="grid grid-cols-5 gap-4"></div>
             </div>
         </div>
 
@@ -175,14 +142,7 @@
             <!-- Search and Filter -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input
-                        type="text"
-                        id="search-input"
-                        placeholder="🔍 Search by name, email, or phone..."
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500"
-                        oninput="filterLeads()"
-                    />
-                    
+                    <input type="text" id="search-input" placeholder="🔍 Search by name, email, or phone..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500" oninput="filterLeads()"/>
                     <select id="status-filter" onchange="filterLeads()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
                         <option value="all">All Statuses</option>
                         <option value="New">New</option>
@@ -191,10 +151,7 @@
                         <option value="Booked">Booked</option>
                         <option value="Lost">Lost</option>
                     </select>
-                    
-                    <button onclick="exportData()" class="flex items-center justify-center gap-2 px-4 py-2 gradient-bg text-white rounded-lg hover:shadow-lg transition-all">
-                        💾 Export CSV
-                    </button>
+                    <button onclick="exportData()" class="flex items-center justify-center gap-2 px-4 py-2 gradient-bg text-white rounded-lg hover:shadow-lg transition-all">💾 Export CSV</button>
                 </div>
             </div>
 
@@ -212,9 +169,7 @@
                                 <th class="px-6 py-4 text-left text-sm font-semibold">Date</th>
                             </tr>
                         </thead>
-                        <tbody id="leads-table-body" class="divide-y divide-gray-200">
-                            <!-- Leads will be inserted here -->
-                        </tbody>
+                        <tbody id="leads-table-body" class="divide-y divide-gray-200"></tbody>
                     </table>
                 </div>
             </div>
@@ -237,31 +192,27 @@
 
     <script>
         // ============================================
-        // 🔐 ADD YOUR AIRTABLE API KEY HERE
+        // 🔐 PASTE YOUR AIRTABLE API KEY HERE
         // ============================================
-        const AIRTABLE_API_KEY = 'pat4LUTQQMLFC9wIQ.433180bd8f7c66be7ede95bdf9e4f0a389cb8a9ae932e054db539d20ccf4cf03';
+        const AIRTABLE_API_KEY = 'patk9OGp8mQspu3xJ.81a1ad175ccbbf9e24d5e4f795dfabef47184123712e34e46d7714017c08c2d9';
         const AIRTABLE_BASE_ID = 'appYxaLzOMQSrgHQu';
         const AIRTABLE_TABLE_ID = 'tblR4uvSyfcezdh9q';
         // ============================================
 
         let allLeads = [];
         let filteredLeads = [];
+        let activities = [];
 
-        // Load real data from Airtable
+        // Load data from Airtable
         async function loadRealData() {
             try {
                 const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`, {
-                    headers: {
-                        'Authorization': `Bearer ${AIRTABLE_API_KEY}`
-                    }
+                    headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` }
                 });
                 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch from Airtable');
-                }
+                if (!response.ok) throw new Error('Failed to fetch from Airtable');
                 
                 const data = await response.json();
-                
                 allLeads = data.records.map(record => ({
                     id: record.id,
                     name: record.fields.Name || 'Unknown',
@@ -277,6 +228,7 @@
                 
                 filteredLeads = [...allLeads];
                 console.log(`✅ Loaded ${allLeads.length} leads from Airtable`);
+                addActivity('Loaded data', `Successfully loaded ${allLeads.length} leads from Airtable`, 'success');
                 return true;
             } catch (error) {
                 console.error('❌ Error loading from Airtable:', error);
@@ -284,7 +236,7 @@
             }
         }
 
-        // Calculate and update stats
+        // Update stats
         function updateStats() {
             const statusCounts = allLeads.reduce((acc, lead) => {
                 acc[lead.status] = (acc[lead.status] || 0) + 1;
@@ -301,7 +253,7 @@
             document.getElementById('stat-booked').textContent = booked;
             document.getElementById('stat-conversion').textContent = `${conversionRate}%`;
 
-            // Update recent leads
+            // Recent leads
             const recentLeadsList = document.getElementById('recent-leads-list');
             const recentLeads = allLeads.slice(-5).reverse();
             recentLeadsList.innerHTML = recentLeads.map(lead => `
@@ -310,41 +262,36 @@
                         <p class="font-medium text-gray-900">${lead.name}</p>
                         <p class="text-sm text-gray-600">${lead.treatment}</p>
                     </div>
-                    <span class="px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(lead.status)}">
-                        ${lead.status}
-                    </span>
+                    <span class="px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(lead.status)}">${lead.status}</span>
                 </div>
             `).join('');
 
-            // Update treatment breakdown
+            // Treatment breakdown
             const treatmentCounts = allLeads.reduce((acc, lead) => {
                 acc[lead.treatment] = (acc[lead.treatment] || 0) + 1;
                 return acc;
             }, {});
             
-            const treatmentBreakdown = document.getElementById('treatment-breakdown');
-            treatmentBreakdown.innerHTML = Object.entries(treatmentCounts).map(([treatment, count]) => `
+            document.getElementById('treatment-breakdown').innerHTML = Object.entries(treatmentCounts).map(([treatment, count]) => `
                 <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <span class="text-gray-700">${treatment}</span>
                     <span class="font-bold text-purple-600">${count}</span>
                 </div>
             `).join('');
 
-            // Update status pipeline
-            const statusPipeline = document.getElementById('status-pipeline');
+            // Status pipeline
             const statuses = ['New', 'Contacted', 'Qualified', 'Booked', 'Lost'];
-            statusPipeline.innerHTML = statuses.map(status => `
+            document.getElementById('status-pipeline').innerHTML = statuses.map(status => `
                 <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold ${getStatusTextColor(status)} mb-1">
-                        ${statusCounts[status] || 0}
-                    </div>
+                    <div class="text-2xl font-bold ${getStatusTextColor(status)} mb-1">${statusCounts[status] || 0}</div>
                     <div class="text-sm text-gray-600">${status}</div>
                 </div>
             `).join('');
         }
 
-        // Get status color classes
+        // Status colors
         function getStatusColor(status) {
+            const cleanStatus = status.trim();
             const colors = {
                 'New': 'bg-blue-100 text-blue-800',
                 'Contacted': 'bg-yellow-100 text-yellow-800',
@@ -352,7 +299,7 @@
                 'Booked': 'bg-green-100 text-green-800',
                 'Lost': 'bg-red-100 text-red-800'
             };
-            return colors[status] || 'bg-gray-100 text-gray-800';
+            return colors[cleanStatus] || 'bg-gray-100 text-gray-800';
         }
 
         function getStatusTextColor(status) {
@@ -368,12 +315,9 @@
 
         // Update leads table
         function updateLeadsTable() {
-            const tbody = document.getElementById('leads-table-body');
-            tbody.innerHTML = filteredLeads.map(lead => `
+            document.getElementById('leads-table-body').innerHTML = filteredLeads.map(lead => `
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4">
-                        <div class="font-medium text-gray-900">${lead.name}</div>
-                    </td>
+                    <td class="px-6 py-4"><div class="font-medium text-gray-900">${lead.name}</div></td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-700">${lead.email}</div>
                         <div class="text-sm text-gray-500">${lead.phone}</div>
@@ -381,11 +325,11 @@
                     <td class="px-6 py-4 text-sm text-gray-700">${lead.treatment}</td>
                     <td class="px-6 py-4">
                         <select onchange="updateLeadStatus('${lead.id}', this.value)" class="px-3 py-1 rounded-full text-xs font-medium border-0 cursor-pointer ${getStatusColor(lead.status)}">
-                            <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
-                            <option value="Contacted" ${lead.status === 'Contacted' ? 'selected' : ''}>Contacted</option>
-                            <option value="Qualified" ${lead.status === 'Qualified' ? 'selected' : ''}>Qualified</option>
-                            <option value="Booked" ${lead.status === 'Booked' ? 'selected' : ''}>Booked</option>
-                            <option value="Lost" ${lead.status === 'Lost' ? 'selected' : ''}>Lost</option>
+                            <option value="New" ${lead.status.trim() === 'New' ? 'selected' : ''}>New</option>
+                            <option value="Contacted" ${lead.status.trim() === 'Contacted' ? 'selected' : ''}>Contacted</option>
+                            <option value="Qualified" ${lead.status.trim() === 'Qualified' ? 'selected' : ''}>Qualified</option>
+                            <option value="Booked" ${lead.status.trim() === 'Booked' ? 'selected' : ''}>Booked</option>
+                            <option value="Lost" ${lead.status.trim() === 'Lost' ? 'selected' : ''}>Lost</option>
                         </select>
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-700">${lead.availability}</td>
@@ -406,14 +350,13 @@
                     lead.phone.includes(searchTerm);
                 
                 const matchesStatus = statusFilter === 'all' || lead.status === statusFilter;
-
                 return matchesSearch && matchesStatus;
             });
 
             updateLeadsTable();
         }
 
-        // Update lead status (and save to Airtable)
+        // Update lead status in Airtable
         async function updateLeadStatus(leadId, newStatus) {
             const lead = allLeads.find(l => l.id === leadId);
             if (!lead) return;
@@ -432,13 +375,14 @@
                     },
                     body: JSON.stringify({
                         fields: {
-                            Status: newStatus
+                            Status: newStatus + ' '  // Add space to match Airtable format
                         }
                     })
                 });
                 
                 if (!response.ok) {
-                    throw new Error('Failed to update Airtable');
+                    const error = await response.json();
+                    throw new Error(error.error?.message || 'Update failed');
                 }
                 
                 lead.status = newStatus;
@@ -446,13 +390,15 @@
                 filterLeads();
                 
                 showNotification(`✅ ${lead.name} updated to ${newStatus}`, 'success');
-                console.log(`✅ Updated lead ${leadId} to ${newStatus} in Airtable`);
+                addActivity('Status Updated', `${lead.name} changed from ${originalStatus} to ${newStatus}`, 'success');
+                console.log(`✅ Updated lead ${leadId} to ${newStatus}`);
                 
             } catch (error) {
-                console.error('❌ Error updating Airtable:', error);
+                console.error('❌ Error:', error);
                 lead.status = originalStatus;
                 selectElement.value = originalStatus;
-                showNotification(`❌ Failed to update. Please try again.`, 'error');
+                showNotification(`❌ Failed: ${error.message}`, 'error');
+                addActivity('Update Failed', `Failed to update ${lead.name}: ${error.message}`, 'error');
             } finally {
                 selectElement.disabled = false;
                 selectElement.style.opacity = '1';
@@ -469,9 +415,7 @@
             }`;
             notification.style.animation = 'slideIn 0.3s ease-out';
             notification.textContent = message;
-            
             document.body.appendChild(notification);
-            
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-out';
                 setTimeout(() => notification.remove(), 300);
@@ -483,13 +427,8 @@
             const csv = [
                 ['Name', 'Email', 'Phone', 'Treatment', 'Status', 'Availability', 'Created'],
                 ...allLeads.map(lead => [
-                    lead.name,
-                    lead.email,
-                    lead.phone,
-                    lead.treatment,
-                    lead.status,
-                    lead.availability,
-                    new Date(lead.created).toLocaleDateString()
+                    lead.name, lead.email, lead.phone, lead.treatment, 
+                    lead.status, lead.availability, new Date(lead.created).toLocaleDateString()
                 ])
             ].map(row => row.join(',')).join('\n');
             
@@ -499,22 +438,91 @@
             a.href = url;
             a.download = `medspa-leads-${new Date().toISOString().split('T')[0]}.csv`;
             a.click();
-            showNotification('✅ Data exported successfully!', 'success');
+            showNotification('✅ Data exported!', 'success');
+            addActivity('Data Exported', `Exported ${allLeads.length} leads to CSV file`, 'info');
+        }
+
+        // Add activity log
+        function addActivity(title, message, type = 'info') {
+            const activity = {
+                id: Date.now(),
+                title,
+                message,
+                type,
+                timestamp: new Date().toISOString()
+            };
+            
+            activities.unshift(activity);
+            
+            // Keep only last 50 activities
+            if (activities.length > 50) {
+                activities = activities.slice(0, 50);
+            }
+            
+            updateActivityList();
+        }
+
+        // Update activity list
+        function updateActivityList() {
+            const activityList = document.getElementById('activity-list');
+            
+            if (activities.length === 0) {
+                activityList.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🔔</div>
+                        <p class="text-gray-500">No recent activity</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            activityList.innerHTML = activities.map(activity => {
+                const icon = activity.type === 'success' ? '✅' : 
+                           activity.type === 'error' ? '❌' : 
+                           activity.type === 'warning' ? '⚠️' : 'ℹ️';
+                
+                const bgColor = activity.type === 'success' ? 'bg-green-50 border-green-500' :
+                               activity.type === 'error' ? 'bg-red-50 border-red-500' :
+                               activity.type === 'warning' ? 'bg-yellow-50 border-yellow-500' :
+                               'bg-blue-50 border-blue-500';
+                
+                const timeAgo = getTimeAgo(activity.timestamp);
+                
+                return `
+                    <div class="p-4 rounded-lg border-l-4 ${bgColor}">
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">${icon}</div>
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-900">${activity.title}</p>
+                                <p class="text-sm text-gray-600 mt-1">${activity.message}</p>
+                                <p class="text-xs text-gray-500 mt-2">${timeAgo}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Get time ago
+        function getTimeAgo(timestamp) {
+            const seconds = Math.floor((new Date() - new Date(timestamp)) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            return `${Math.floor(seconds / 86400)} days ago`;
         }
 
         // Show tab
         function showTab(tabName) {
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('leads-view').classList.add('hidden');
-            document.getElementById('activity-view').classList.add('hidden');
-
-            document.querySelectorAll('[id^="tab-"]').forEach(tab => {
+            ['dashboard', 'leads', 'activity'].forEach(t => {
+                document.getElementById(`${t}-view`).classList.add('hidden');
+                const tab = document.getElementById(`tab-${t}`);
                 tab.classList.remove('border-purple-600', 'text-purple-600');
                 tab.classList.add('border-transparent', 'text-gray-600');
             });
 
             document.getElementById(`${tabName}-view`).classList.remove('hidden');
-
             const activeTab = document.getElementById(`tab-${tabName}`);
             activeTab.classList.remove('border-transparent', 'text-gray-600');
             activeTab.classList.add('border-purple-600', 'text-purple-600');
@@ -533,26 +541,27 @@
                 filterLeads();
                 showNotification(`✅ Loaded ${allLeads.length} leads!`, 'success');
             } else {
-                showNotification('❌ Failed to load data from Airtable', 'error');
+                showNotification('❌ Failed to load data', 'error');
+                addActivity('Refresh Failed', 'Could not load data from Airtable', 'error');
             }
             
             button.disabled = false;
             button.textContent = '↻ Refresh';
         }
 
-        // Initialize on page load
+        // Initialize
         window.addEventListener('DOMContentLoaded', async () => {
             console.log('🚀 Loading Med Spa Dashboard...');
+            addActivity('System Started', 'Med Spa Dashboard initialized', 'info');
             
             const success = await loadRealData();
-            
             if (success) {
                 updateStats();
                 updateLeadsTable();
                 console.log('✅ Dashboard loaded successfully!');
             } else {
-                console.log('❌ Failed to load from Airtable. Check API key.');
-                showNotification('❌ Could not connect to Airtable. Check console.', 'error');
+                showNotification('❌ Could not connect to Airtable', 'error');
+                addActivity('Connection Failed', 'Could not connect to Airtable. Check API key.', 'error');
             }
         });
     </script>
